@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
+import ExampleUseState from "./examples/ExamplesUseState/index";
+import logo from "./logo.svg";
 
 const App: React.FC = () => {
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
+        <p className="App-link">
+          React 102
+          <br />
+          Hooks by example
         </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
       </header>
+      <ExampleUseState />
     </div>
   );
-}
+};
 
 export default App;
+
+/*
+
+Idées:
+ - useState asynchrone
+ - pq utiliser un hook custom pour les contextes (permet d'éviter le typecheck sur null & co)
+ - react context instantiation or mounting
+ - hook component should never update
+*/
