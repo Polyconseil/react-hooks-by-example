@@ -19,7 +19,44 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <header className="App-header">
+      <header
+        style={{
+          backgroundColor: "#282c34",
+          height: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          fontSize: "calc(10px + 2vmin)",
+          color: "white",
+          position: "relative"
+        }}
+      >
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            bottom: 0,
+            left: 10,
+            width: "20%",
+            overflow: "auto",
+            textAlign: "left"
+          }}
+        >
+          <h4>Examples:</h4>
+          <ul>
+            {examples.map(example => (
+              <li style={{}}>
+                <a
+                  href={`#${genId(example.title)}`}
+                  style={{ textDecoration: "none", color: "#61dafb" }}
+                >
+                  {example.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
         <img src={logo} className="App-logo" alt="logo" />
         <p className="App-link">
           React 102
