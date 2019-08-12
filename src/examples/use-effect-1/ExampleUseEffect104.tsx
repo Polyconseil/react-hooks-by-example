@@ -45,6 +45,8 @@ function usePromise<T>(promiser: () => Promise<T>) {
 const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
   const log = useLog();
 
+  // useCallback makes sure to not redefine the fetcher
+  // if the orderId did not change
   const fetcher = React.useCallback(
     () => fakeFetch(orderId).then(req => req.json()),
     [orderId]

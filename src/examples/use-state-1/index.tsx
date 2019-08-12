@@ -1,15 +1,14 @@
-import React from "react";
-
-import ExampleUseState101 from "./ExampleUseState101";
 /* eslint import/no-webpack-loader-syntax: off */
 import ExampleUseState101Code from "!raw-loader!./ExampleUseState101";
-import ExampleUseState102 from "./ExampleUseState102";
 /* eslint import/no-webpack-loader-syntax: off */
 import ExampleUseState102Code from "!raw-loader!./ExampleUseState102";
-import ExampleUseState103 from "./ExampleUseState103";
 /* eslint import/no-webpack-loader-syntax: off */
 import ExampleUseState103Code from "!raw-loader!./ExampleUseState103";
+import React from "react";
 import { IExample } from "../../commons/types";
+import ExampleUseState101 from "./ExampleUseState101";
+import ExampleUseState102 from "./ExampleUseState102";
+import ExampleUseState103 from "./ExampleUseState103";
 
 const examples: IExample[] = [
   {

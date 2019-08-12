@@ -2,21 +2,22 @@ import React from "react";
 import ActionButton from "../../commons/ActionButton";
 import { useLog } from "../../commons/ExampleBloc";
 
-const ExampleUseState101 = () => {
+const ExampleUseRef101 = () => {
   const log = useLog();
 
-  const [state, setState] = React.useState<number>(0);
-  log("virtual-render", { state });
+  const ref = React.useRef<number>(0);
+  log("virtual-render", { ref });
 
   return (
     <>
-      <pre>{JSON.stringify(state, null, 2)}</pre>
+      <pre>{JSON.stringify(ref, null, 2)}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Do nothing state-wise"
+            label="Do nothing ref-wise"
             onClick={() => {
               /* NOOP */
+              log("Ref: ", { ref });
             }}
           />
         </li>
@@ -24,7 +25,8 @@ const ExampleUseState101 = () => {
           <ActionButton
             label="Increment"
             onClick={() => {
-              setState(state + 1);
+              ref.current++;
+              log("Ref: ", { ref });
             }}
           />
         </li>
@@ -32,7 +34,8 @@ const ExampleUseState101 = () => {
           <ActionButton
             label="Reset to 0"
             onClick={() => {
-              setState(0);
+              ref.current = 0;
+              log("Ref: ", { ref });
             }}
           />
         </li>
@@ -41,4 +44,4 @@ const ExampleUseState101 = () => {
   );
 };
 
-export default ExampleUseState101;
+export default ExampleUseRef101;
