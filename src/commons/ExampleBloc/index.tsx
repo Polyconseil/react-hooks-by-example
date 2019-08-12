@@ -51,7 +51,7 @@ const Code = ({ code }: { code?: string | null }) => {
   );
 };
 
-const Logs = ({ logs }: { logs: ILog[] }) => {
+const Logs = ({ logs, clear }: { logs: ILog[]; clear: () => void }) => {
   return (
     <div
       style={{
@@ -64,6 +64,12 @@ const Logs = ({ logs }: { logs: ILog[] }) => {
         borderLeft: "1px #EEE solid"
       }}
     >
+      <div
+        style={{ position: "absolute", top: 5, right: 5, cursor: "pointer" }}
+        onClick={clear}
+      >
+        🗑
+      </div>
       {logs
         .map((log, i) => (
           <div
@@ -152,16 +158,22 @@ const Col = ({
 };
 
 interface IProps {
+  id: string;
   Component: React.ComponentType<{}>;
   title: string;
+  prev?: string;
+  next?: string;
   code?: string;
   preface?: React.ReactNode;
   explanation?: React.ReactNode;
 }
 
 const ExampleBloc = ({
+  id,
   Component,
   title,
+  prev,
+  next,
   code,
   preface,
   explanation
@@ -174,6 +186,9 @@ const ExampleBloc = ({
             logs: [...logs.logs, { ...action.payload, id: logs.id }],
             id: logs.id + 1
           };
+
+        case "clear":
+          return { logs: [], id: 1 };
 
         default:
           throw new Error("Not implemented: " + action.type);
@@ -204,8 +219,6 @@ const ExampleBloc = ({
     code = code.trim();
   }
 
-  const id = title.replace(/[^a-zA-Z0-9]/g, "_");
-
   return (
     <section
       style={{
@@ -225,12 +238,36 @@ const ExampleBloc = ({
         style={{
           margin: 10,
           padding: 10,
-          borderBottom: "1px solid #61dafb"
+          borderBottom: "1px solid #61dafb",
+          display: "flex",
+          justifyContent: "space-between"
         }}
       >
-        <a style={{ color: "#61dafb" }} href={`#${id}`}>
+        <a style={{ color: "#61dafb", textDecoration: "none" }} href={`#${id}`}>
           {title}
         </a>
+        <div>
+          {prev && (
+            <a
+              style={{
+                color: "#61dafb",
+                textDecoration: "none",
+                margin: "0 10px"
+              }}
+              href={`#${prev}`}
+            >
+              ⇐
+            </a>
+          )}
+          {next && (
+            <a
+              style={{ color: "#61dafb", textDecoration: "none" }}
+              href={`#${next}`}
+            >
+              ⇒
+            </a>
+          )}
+        </div>
       </h3>
       <div
         style={{
@@ -255,7 +292,7 @@ const ExampleBloc = ({
         </Col>
 
         <Col percentage={20} margin={30}>
-          <Logs logs={logs.logs} />
+          <Logs logs={logs.logs} clear={() => dispatch({ type: "clear" })} />
         </Col>
       </div>
     </section>

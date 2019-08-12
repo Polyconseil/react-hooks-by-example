@@ -2,14 +2,14 @@ import React from "react";
 
 const Preface = ({ children }: { children: React.ReactNode }) => {
   return (
-    <p
+    <div
       style={{
         padding: 10,
         color: "#EEEEEE"
       }}
     >
       {children}
-    </p>
+    </div>
   );
 };
 

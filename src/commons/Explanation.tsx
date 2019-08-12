@@ -4,7 +4,7 @@ const Explanation = ({ children }: { children: React.ReactNode }) => {
   const [show, setShow] = useState<Boolean>(false);
 
   return (
-    <p
+    <div
       style={{
         padding: 10,
         color: "#61dafb",
@@ -13,7 +13,7 @@ const Explanation = ({ children }: { children: React.ReactNode }) => {
       onDoubleClick={() => setShow(!show)}
     >
       {children}
-    </p>
+    </div>
   );
 };
 
