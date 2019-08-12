@@ -46,7 +46,7 @@ const App: React.FC = () => {
           <h4>Examples:</h4>
           <ul>
             {examples.map(example => (
-              <li style={{}}>
+              <li key={example.title} style={{}}>
                 <a
                   href={`#${genId(example.title)}`}
                   style={{ textDecoration: "none", color: "#61dafb" }}

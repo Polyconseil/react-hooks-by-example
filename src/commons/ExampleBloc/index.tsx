@@ -109,7 +109,7 @@ const ComponentAndText = ({
         right: 0
       }}
     >
-      <Preface>{preface}</Preface>
+      {preface && <Preface>{preface}</Preface>}
       <div
         style={{
           padding: 10,
@@ -121,7 +121,7 @@ const ComponentAndText = ({
       >
         {children}
       </div>
-      <Explanation>{explanation}</Explanation>
+      {explanation && <Explanation>{explanation}</Explanation>}
     </div>
   );
 };
