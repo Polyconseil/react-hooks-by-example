@@ -19,7 +19,7 @@ const examples: IExample[] = [
     code: ExampleUseRef101Code,
     preface: (
       <>
-        The last of the three basic hooks, <strong>useRef()</strong> makes it
+        Not a basic hook, but it could be, <strong>useRef()</strong> makes it
         possible to attach some data to the component in a mutable way without
         triggering re-render
         <br />
