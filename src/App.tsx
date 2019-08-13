@@ -5,6 +5,7 @@ import examplesUseEffect1 from "./examples/use-effect-1";
 import examplesUseRef1 from "./examples/use-ref-1";
 import examplesHooksOrder from "./examples/hooks-order";
 import examplesMemoization from "./examples/memoization";
+import examplesScenarioOrder from "./examples/scenario-order";
 import logo from "./logo.svg";
 import ExampleBloc from "./commons/ExampleBloc";
 import { IExample } from "./commons/types";
@@ -19,7 +20,8 @@ const App: React.FC = () => {
     .concat(examplesUseEffect1)
     .concat(examplesUseRef1)
     .concat(examplesHooksOrder)
-    .concat(examplesMemoization);
+    .concat(examplesMemoization)
+    .concat(examplesScenarioOrder);
 
   return (
     <div className="App">
@@ -90,8 +92,7 @@ const App: React.FC = () => {
 export default App;
 
 /*
-
-Idées:
+Autres idées:
  - pq utiliser un hook custom pour les contextes (permet d'éviter le typecheck sur null & co)
  - react context instantiation or mounting
 */

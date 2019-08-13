@@ -80,7 +80,7 @@ const examples: IExample[] = [
       <>
         <strong>React.memo</strong> is not a hook, but a HOC that will perform a
         shallow comparison on the input props before triggering a render of the
-        wrapped component. SOmetime, it can be cleaner to use it instead of the
+        wrapped component. Sometimes, it can be cleaner to use it instead of the
         more general-pruprpose <strong>useMemo()</strong>
       </>
     ),
