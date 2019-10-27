@@ -4,9 +4,7 @@ import { useLog } from "../../commons/ExampleBloc";
 
 const ExampleUseState101 = () => {
   const log = useLog();
-
   const [state, setState] = React.useState<number>(0);
-  log("virtual-render", { state });
 
   return (
     <>
@@ -25,6 +23,7 @@ const ExampleUseState101 = () => {
             label="Increment"
             onClick={() => {
               setState(state + 1);
+              log("after increment", state);
             }}
           />
         </li>

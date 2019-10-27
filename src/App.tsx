@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import examplesUseState1 from "./examples/use-state-1";
 import examplesUseEffect1 from "./examples/use-effect-1";
+import examplesUseContext1 from "./examples/use-context-1";
 import examplesUseRef1 from "./examples/use-ref-1";
 import examplesHooksOrder from "./examples/hooks-order";
 import examplesMemoization from "./examples/memoization";
@@ -18,6 +19,7 @@ const App: React.FC = () => {
   let examples: IExample[] = ([] as IExample[])
     .concat(examplesUseState1)
     .concat(examplesUseEffect1)
+    .concat(examplesUseContext1)
     .concat(examplesUseRef1)
     .concat(examplesHooksOrder)
     .concat(examplesMemoization)

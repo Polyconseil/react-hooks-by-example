@@ -1,94 +1,105 @@
 import React from "react";
 import ActionButton from "../../commons/ActionButton";
+import cloneDeep from "lodash.clonedeep";
 import { useLog } from "../../commons/ExampleBloc";
 
-const fakeFetch = (
-  id: number
-): Promise<{ json: () => Promise<{ name: string }> }> => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve({
-        json: async () => {
-          return { name: `Order #${id}` };
-        }
-      });
-      // We simulate the server response time by using
-      // the order id as a milliseconds wait time
-    }, id);
-  });
-};
-
-const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
+const SubComponent = ({
+  value,
+  setValue,
+  otherValue,
+  setOtherValue
+}: {
+  value: number;
+  setValue: (newValue: number) => void;
+  otherValue: { str: string };
+  setOtherValue: (newValue: { str: string }) => void;
+}) => {
   const log = useLog();
+  const [state, setState] = React.useState<number>(value);
+  const [otherState, setOtherState] = React.useState<any>(otherValue);
+  const [shouldSetSuperState, setShouldSetSuperState] = React.useState<boolean>(false);
 
-  const [orderName, setOrderName] = React.useState<string | null>(null);
-  log("virtual-render > DisplayMyOrder", { order: orderName });
+  log("render");
 
   React.useEffect(() => {
-    log("useEffect called !", { orderId, orderName });
-
-    let canceled = false;
-
-    fakeFetch(orderId)
-      .then(req => req.json())
-      // When the request is completed, we check before setting the state
-      // that the request was not canceled
-      .then(order => {
-        if (canceled) {
-          log(
-            `Request for order ${orderId} was canceled, we don't set the state`
-          );
-        } else {
-          setOrderName(order.name);
-        }
-      });
-
-    // The clean-up function will flag the request as canceled
-    return () => {
-      canceled = true;
-    };
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderId]);
-
-  return <div>My order: {orderName}</div>;
-};
-
-const ExampleUseEffect103 = () => {
-  const log = useLog();
-
-  const [orderId, setOrderId] = React.useState<number | null>(null);
-  log("virtual-render > Example", { orderId });
+    setState(value);
+  }, [value, setState]);
+  React.useEffect(() => {
+    log("use effect");
+    if (shouldSetSuperState) setOtherValue(otherValue);
+    else setOtherState(otherValue);
+  }, [otherValue, setOtherState, setOtherValue, shouldSetSuperState]);
 
   return (
     <>
-      <pre>Requested order: {orderId}</pre>
+      <pre>{JSON.stringify({ value, state, otherState, shouldSetSuperState }, null, 2)}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Display orderId"
+            label="Increment state"
             onClick={() => {
-              const id = Number.parseFloat(prompt("Order ID?") || "");
-              setOrderId(id);
+              setState(state => state + 1);
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Display 2 orders quickly"
+            label="Increment super state"
             onClick={() => {
-              setOrderId(2000);
-              setTimeout(() => setOrderId(1000), 1);
+              setValue(value + 1);
             }}
           />
-          <br />
-          (Call order 2000 (2 seconds to get a response) and without waiting
-          call order 1000 (1 sec to get a response))
+        </li>
+        <li>
+          <ActionButton
+            label="Change other state"
+            onClick={() => {
+              setOtherState({ someProps: "zefzefz" });
+            }}
+          />
+        </li>
+        <li>
+          <ActionButton
+            label="Change super other state"
+            onClick={() => {
+              setOtherValue({ str: "zezfez" });
+            }}
+          />
+        </li>
+        <li>
+          <ActionButton
+            label="Reset super state"
+            onClick={() => {
+              setValue(0);
+              setOtherValue({ str: "" });
+            }}
+          />
+        </li>
+        <li>
+          <ActionButton
+            label="Change state option"
+            onClick={() => {
+              setShouldSetSuperState(state => !state);
+            }}
+          />
         </li>
       </ul>
-      {orderId && <DisplayMyOrder orderId={orderId} />}
     </>
   );
 };
 
-export default ExampleUseEffect103;
+const ExampleUseState106 = () => {
+  const [counter, setCounter] = React.useState<number>(0);
+  const [str, setStr] = React.useState<{ str: string }>({ str: "" });
+
+  return (
+    <SubComponent
+      value={counter}
+      setValue={setCounter}
+      otherValue={cloneDeep(str)}
+      setOtherValue={setStr}
+    />
+  );
+};
+
+export default ExampleUseState106;

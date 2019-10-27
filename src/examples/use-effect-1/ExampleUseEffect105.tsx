@@ -25,16 +25,32 @@ const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
   React.useEffect(() => {
     log("useEffect called !", { orderId, orderName });
 
+    let canceled = false;
+
     fakeFetch(orderId)
       .then(req => req.json())
-      .then(order => setOrderName(order.name));
+      // When the request is completed, we check before setting the state
+      // that the request was not canceled
+      .then(order => {
+        if (canceled) {
+          log(`Request for order ${orderId} was canceled, we don't set the state`);
+        } else {
+          setOrderName(order.name);
+        }
+      });
+
+    // The clean-up function will flag the request as canceled
+    return () => {
+      canceled = true;
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
 
   return <div>My order: {orderName}</div>;
 };
 
-const ExampleUseEffect104 = () => {
+const ExampleUseEffect105 = () => {
   const log = useLog();
 
   const [orderId, setOrderId] = React.useState<number | null>(null);
@@ -71,4 +87,4 @@ const ExampleUseEffect104 = () => {
   );
 };
 
-export default ExampleUseEffect104;
+export default ExampleUseEffect105;

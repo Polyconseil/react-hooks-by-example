@@ -16,25 +16,45 @@ const fakeFetch = (id: number): Promise<{ json: () => Promise<{ name: string }> 
   });
 };
 
+/**
+ * TODO: handle promise rejection
+ */
+function usePromise<T>(promiser: () => Promise<T>) {
+  const [result, setResult] = React.useState<T | null>(null);
+
+  React.useEffect(() => {
+    let canceled = false;
+
+    promiser().then(result => {
+      if (!canceled) {
+        setResult(result);
+      }
+    });
+
+    // The clean-up function will flag the request as canceled
+    return () => {
+      canceled = true;
+    };
+  }, [promiser]);
+
+  return result;
+}
+
 const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
   const log = useLog();
 
-  const [orderName, setOrderName] = React.useState<string | null>(null);
-  log("virtual-render > DisplayMyOrder", { order: orderName });
+  // useCallback makes sure to not redefine the fetcher
+  // if the orderId did not change
+  const fetcher = React.useCallback(() => fakeFetch(orderId).then(req => req.json()), [orderId]);
 
-  React.useEffect(() => {
-    log("useEffect called !", { orderId, orderName });
+  const order = usePromise(fetcher);
 
-    fakeFetch(orderId)
-      .then(req => req.json())
-      .then(order => setOrderName(order.name));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [orderId]);
+  log("virtual-render > DisplayMyOrder", { order });
 
-  return <div>My order: {orderName}</div>;
+  return <div>My order: {order ? order.name : "Loading..."}</div>;
 };
 
-const ExampleUseEffect104 = () => {
+const ExampleUseEffect106 = () => {
   const log = useLog();
 
   const [orderId, setOrderId] = React.useState<number | null>(null);
@@ -71,4 +91,4 @@ const ExampleUseEffect104 = () => {
   );
 };
 
-export default ExampleUseEffect104;
+export default ExampleUseEffect106;

@@ -6,7 +6,6 @@ const ExampleUseEffect101 = () => {
   const log = useLog();
 
   const [state, setState] = React.useState<number>(0);
-  log("virtual-render", { state });
 
   React.useEffect(() => {
     log("useEffect called !", { state });

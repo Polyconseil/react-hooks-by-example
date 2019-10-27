@@ -1,67 +1,53 @@
 import React from "react";
 import ActionButton from "../../commons/ActionButton";
-import { useLog } from "../../commons/ExampleBloc";
+import cloneDeep from "lodash.clonedeep";
 
 const ExampleUseState102 = () => {
-  const log = useLog();
-
-  const [numberState, setNumberState] = React.useState<number>(0);
-  const [stringState, setStringState] = React.useState<string>("");
-  const [objectState, setObjectState] = React.useState<{ insideVal: string }>({
-    insideVal: ""
+  const [state, setState] = React.useState<{ value: { data: number } }>({
+    value: { data: 0 }
   });
-  log("virtual-render", { numberState, stringState, objectState });
 
   return (
     <>
-      <pre>
-        {JSON.stringify({ numberState, stringState, objectState }, null, 2)}
-      </pre>
-
+      <pre>{JSON.stringify(state, null, 2)}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Update numberState"
+            label="Do nothing state-wise"
             onClick={() => {
-              const s = Number.parseFloat(prompt("Value?") || "");
-              setNumberState(s);
+              /* NOOP */
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Update stringState"
+            label="Increment"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              setStringState(s);
+              setState({ value: { data: state.value.data + 1 } });
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Update objectState"
+            label="Reset to 0"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              setObjectState({ insideVal: s });
+              setState({ value: { data: 0 } });
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Do something stupid v1"
+            label="Re-apply state copy"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              objectState.insideVal = s;
+              setState(cloneDeep(state));
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Do something stupid v2"
+            label="Re-apply state"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              objectState.insideVal = s;
-              setObjectState(objectState);
+              setState(state);
             }}
           />
         </li>
