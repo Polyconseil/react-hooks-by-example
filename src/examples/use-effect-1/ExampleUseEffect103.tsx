@@ -28,7 +28,7 @@ const SubComponent = ({
     log("use effect");
     if (shouldSetSuperState) setOtherValue(otherValue);
     else setOtherState(otherValue);
-  }, [otherValue, setOtherState, setOtherValue, shouldSetSuperState]);
+  }, [otherValue, setOtherState, setOtherValue, shouldSetSuperState, log]);
 
   return (
     <>

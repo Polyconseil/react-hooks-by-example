@@ -1,24 +1,16 @@
 import React from "react";
 import ActionButton from "../../commons/ActionButton";
-import cloneDeep from "lodash.clonedeep";
 
 const ExampleUseState102 = () => {
-  const [state, setState] = React.useState<{ value: { data: number } }>({
+  const initial = {
     value: { data: 0 }
-  });
+  };
+  const [state, setState] = React.useState<{ value: { data: number } }>(initial);
 
   return (
     <>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       <ul>
-        <li>
-          <ActionButton
-            label="Do nothing state-wise"
-            onClick={() => {
-              /* NOOP */
-            }}
-          />
-        </li>
         <li>
           <ActionButton
             label="Increment"
@@ -31,15 +23,7 @@ const ExampleUseState102 = () => {
           <ActionButton
             label="Reset to 0"
             onClick={() => {
-              setState({ value: { data: 0 } });
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Re-apply state copy"
-            onClick={() => {
-              setState(cloneDeep(state));
+              setState(initial);
             }}
           />
         </li>

@@ -5,46 +5,21 @@ import { useLog } from "../../commons/ExampleBloc";
 const ExampleUseState105 = () => {
   const log = useLog();
 
-  const [numberState, setNumberState] = React.useState<number>(0);
-  const [stringState, setStringState] = React.useState<string>("");
+  const [render, setRender] = React.useState<boolean>(false);
   const [objectState, setObjectState] = React.useState<{ insideVal: string }>({
     insideVal: ""
   });
 
   return (
     <>
-      <pre>
-        {JSON.stringify({ numberState, stringState, objectState }, null, 2)}
-      </pre>
+      <pre>{JSON.stringify({ render, objectState }, null, 2)}</pre>
 
       <ul>
         <li>
           <ActionButton
-            label="Update numberState"
+            label="render"
             onClick={() => {
-              const s = Number.parseFloat(prompt("Value?") || "");
-              log("Will update", s);
-              setNumberState(s);
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Update stringState"
-            onClick={() => {
-              const s = prompt("Value?") || "";
-              log("Will update", s);
-              setStringState(s);
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Update objectState"
-            onClick={() => {
-              const s = prompt("Value?") || "";
-              log("Will update", s);
-              setObjectState({ insideVal: s });
+              setRender(b => !b);
             }}
           />
         </li>

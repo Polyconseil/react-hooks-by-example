@@ -13,14 +13,6 @@ const ExampleUseState104 = () => {
       <ul>
         <li>
           <ActionButton
-            label="Do nothing state-wise"
-            onClick={() => {
-              /* NOOP */
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
             label={"Change function basic"}
             onClick={() => {
               setStateF(() => Math.random() * 100);

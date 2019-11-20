@@ -77,12 +77,7 @@ const ExampleUseState106 = () => {
   const [str, setStr] = React.useState<{ str: string }>({ str: "" });
 
   return (
-    <SubComponent
-      value={counter}
-      setValue={setCounter}
-      otherValue={str}
-      setOtherValue={setStr}
-    />
+    <SubComponent value={counter} setValue={setCounter} otherValue={str} setOtherValue={setStr} />
   );
 };
 
