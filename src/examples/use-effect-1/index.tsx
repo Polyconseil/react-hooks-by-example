@@ -10,6 +10,8 @@ import ExampleUseEffect104Code from "!raw-loader!./ExampleUseEffect104";
 import ExampleUseEffect105Code from "!raw-loader!./ExampleUseEffect105";
 /* eslint import/no-webpack-loader-syntax: off */
 import ExampleUseEffect106Code from "!raw-loader!./ExampleUseEffect106";
+/* eslint import/no-webpack-loader-syntax: off */
+import ExampleUseEffect107Code from "!raw-loader!./ExampleUseEffect107";
 import React from "react";
 import { IExample } from "../../commons/types";
 import ExampleUseEffect101 from "./ExampleUseEffect101";
@@ -18,6 +20,7 @@ import ExampleUseEffect103 from "./ExampleUseEffect103";
 import ExampleUseEffect104 from "./ExampleUseEffect104";
 import ExampleUseEffect105 from "./ExampleUseEffect105";
 import ExampleUseEffect106 from "./ExampleUseEffect106";
+import ExampleUseEffect107 from "./ExampleUseEffect107";
 
 const examples: IExample[] = [
   {
@@ -137,6 +140,19 @@ const examples: IExample[] = [
       <>
         We are using here a new React Hook: <strong>useCallback</strong>. We will see in a next
         section what is its purpose.
+      </>
+    )
+  },
+  {
+    title: "useEffect 107",
+    Component: ExampleUseEffect107,
+    code: ExampleUseEffect107Code,
+    preface: <>How does a useEffect handle objects in dependencies ?</>,
+    explanation: (
+      <>
+        Unfortunately, badly.
+        <br />
+        Keep es-lint updated and be ready to tricks it many times.
       </>
     )
   }
