@@ -37,7 +37,7 @@ export const useLog = () => {
 };
 const useLogObserver = () => {
   const context = useContext(LoggerContext)!;
-  const [_, setTrigger] = useState<number>(0);
+  const [, setTrigger] = useState<number>(0);
 
   useEffect(() => {
     const callback = () => {
@@ -49,7 +49,7 @@ const useLogObserver = () => {
         (observer) => observer !== callback
       );
     };
-  }, [context]);
+  }, [context.observers]);
   return context.logs.current;
 };
 
