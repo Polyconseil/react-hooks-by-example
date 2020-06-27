@@ -4,35 +4,43 @@ import { useLog } from "../../commons/ExampleBloc";
 
 const ExampleUseState104 = () => {
   const log = useLog();
-  const [state, setState] = React.useState<number>(() => 0);
-  const [stateF, setStateF] = React.useState<() => number>(() => () => 0);
+
+  const [render, setRender] = React.useState<boolean>(false);
+  const [objectState, setObjectState] = React.useState<{ insideVal: string }>(() => {
+    return { insideVal: "" };
+  });
 
   return (
     <>
-      <pre>{JSON.stringify({ state, stateF }, null, 2)}</pre>
+      <pre>{JSON.stringify({ render, objectState }, null, 2)}</pre>
+
       <ul>
         <li>
           <ActionButton
-            label={"Change function basic"}
+            label="render"
             onClick={() => {
-              setStateF(() => Math.random() * 100);
+              setRender((b) => !b);
             }}
           />
         </li>
         <li>
           <ActionButton
-            label={"Change function"}
+            label="Do something stupid v1"
             onClick={() => {
-              setStateF(() => () => Math.random() * 100);
+              const s = prompt("Value?") || "";
+              log("Will update", s);
+              objectState.insideVal = s;
             }}
           />
         </li>
         <li>
           <ActionButton
-            label={"Is it a function ?"}
+            label="Do something stupid v2"
             onClick={() => {
-              log("", stateF());
-              setState(state => state + 1);
+              const s = prompt("Value?") || "";
+              log("Will update", s);
+              objectState.insideVal = s;
+              setObjectState(objectState);
             }}
           />
         </li>

@@ -12,14 +12,6 @@ const ExampleUseState101 = () => {
       <ul>
         <li>
           <ActionButton
-            label="Do nothing state-wise"
-            onClick={() => {
-              /* NOOP */
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
             label="Increment"
             onClick={() => {
               setState(state + 1);
@@ -32,6 +24,7 @@ const ExampleUseState101 = () => {
             label="Reset to 0"
             onClick={() => {
               setState(0);
+              log("reset", state);
             }}
           />
         </li>

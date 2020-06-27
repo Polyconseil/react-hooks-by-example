@@ -22,13 +22,15 @@ export const useLog = () => {
   const context = useContext(LoggerContext)!;
   useEffect(() => {
     const renderDate = Date.now();
-    context.logs.current = context.logs.current.map(tLog => {
-      return !tLog.elapsedTime ? {
-        ...tLog,
-        elapsedTime: renderDate - tLog.fireDate
-      } : tLog;
+    context.logs.current = context.logs.current.map((tLog) => {
+      return !tLog.elapsedTime
+        ? {
+            ...tLog,
+            elapsedTime: renderDate - tLog.fireDate,
+          }
+        : tLog;
     });
-    context.observers.current.forEach(observer => observer());
+    context.observers.current.forEach((observer) => observer());
   });
 
   return context.action;
@@ -39,11 +41,13 @@ const useLogObserver = () => {
 
   useEffect(() => {
     const callback = () => {
-      setTrigger(t => t + 1);
-    }
+      setTrigger((t) => t + 1);
+    };
     context.observers.current.push(callback);
     return () => {
-      context.observers.current = context.observers.current.filter(observer => observer !== callback);
+      context.observers.current = context.observers.current.filter(
+        (observer) => observer !== callback
+      );
     };
   }, [context]);
   return context.logs.current;
@@ -62,7 +66,7 @@ const Code = ({ code }: { code?: string | null }) => {
         position: "absolute",
         top: 10,
         bottom: 10,
-        width: "100%"
+        width: "100%",
       }}
       language="typescript"
       style={highlightStyle}
@@ -80,31 +84,22 @@ const Logs = ({ clear }: { clear: () => void }) => {
     <div
       style={{
         color: "#EEEEEE",
+        height: "100%",
+        margin: "2em 0em",
+        border: "1px #EEE solid",
         overflow: "auto",
-        position: "absolute",
-        top: 10,
-        bottom: 10,
-        width: "100%",
-        borderLeft: "1px #EEE solid"
+        position: "relative",
       }}
     >
-      <div
-        style={{ position: "absolute", top: 5, right: 5, cursor: "pointer" }}
-        onClick={clear}
-      >
+      <div style={{ position: "absolute", top: 5, right: 5, cursor: "pointer" }} onClick={clear}>
         🗑
       </div>
       {logs
         .map((log, i) => (
-          <div
-            key={i}
-            style={{ margin: 10, borderBottom: "1px #EEE solid" }}
-          >
+          <div key={i} style={{ margin: 10, borderBottom: "1px #EEE solid" }}>
             [<span style={{ fontWeight: "bold" }}>{i}</span>] (
-            <span style={{ fontStyle: "italic" }}>
-              +{log.elapsedTime || "..."}ms
-            </span>
-            ) {log.message}
+            <span style={{ fontStyle: "italic" }}>+{log.elapsedTime || "..."}ms</span>){" "}
+            {log.message}
             <pre>{JSON.stringify(log.mixed, null, 2)}</pre>
           </div>
         ))
@@ -116,31 +111,22 @@ const Logs = ({ clear }: { clear: () => void }) => {
 const ComponentAndText = ({
   preface,
   explanation,
-  children
+  children,
 }: {
   children: React.ReactNode;
   preface?: React.ReactNode;
   explanation?: React.ReactNode;
 }) => {
   return (
-    <div
-      style={{
-        overflow: "auto",
-        position: "absolute",
-        top: 0,
-        bottom: 0,
-        left: 0,
-        right: 0
-      }}
-    >
+    <div>
       {preface && <Preface>{preface}</Preface>}
       <div
         style={{
           padding: 10,
-          margin: 10,
+          margin: "0px 0px 10px 0px",
           backgroundColor: "##000",
           color: "#FFF",
-          border: "1px solid #FFF"
+          border: "1px solid #FFF",
         }}
       >
         {children}
@@ -153,7 +139,7 @@ const ComponentAndText = ({
 const Col = ({
   percentage,
   margin,
-  children
+  children,
 }: {
   percentage: number;
   margin: number;
@@ -163,7 +149,7 @@ const Col = ({
     <div
       style={{
         flex: `0 0 ${percentage}%`,
-        position: "relative"
+        position: "relative",
       }}
     >
       <div
@@ -172,7 +158,7 @@ const Col = ({
           top: 0,
           bottom: 0,
           left: margin,
-          right: margin
+          right: margin,
         }}
       >
         {children}
@@ -192,16 +178,7 @@ interface IProps {
   explanation?: React.ReactNode;
 }
 
-const ExampleBloc = ({
-  id,
-  Component,
-  title,
-  prev,
-  next,
-  code,
-  preface,
-  explanation
-}: IProps) => {
+const ExampleBloc = ({ id, Component, title, prev, next, code, preface, explanation }: IProps) => {
   const logStorage = useRef<Log[]>([]);
   const logObservers = useRef<(() => void)[]>([]);
 
@@ -211,7 +188,7 @@ const ExampleBloc = ({
         message: message,
         fireDate: Date.now(),
         elapsedTime: null,
-        mixed: cloneDeep(mixed)
+        mixed: cloneDeep(mixed),
       };
       logStorage.current.push(newLog);
     };
@@ -228,7 +205,7 @@ const ExampleBloc = ({
             backgroundColor: "#282c34",
             textAlign: "left",
             fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif"
+              "-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif",
           }}
         >
           <h3
@@ -238,7 +215,7 @@ const ExampleBloc = ({
               padding: 10,
               borderBottom: "1px solid #61dafb",
               display: "flex",
-              justifyContent: "space-between"
+              justifyContent: "space-between",
             }}
           >
             <a style={{ color: "#61dafb", textDecoration: "none" }} href={`#${id}`}>
@@ -250,20 +227,17 @@ const ExampleBloc = ({
                   style={{
                     color: "#61dafb",
                     textDecoration: "none",
-                    margin: "0 10px"
+                    margin: "0 10px",
                   }}
                   href={`#${prev}`}
                 >
                   ⇐
-            </a>
+                </a>
               )}
               {next && (
-                <a
-                  style={{ color: "#61dafb", textDecoration: "none" }}
-                  href={`#${next}`}
-                >
+                <a style={{ color: "#61dafb", textDecoration: "none" }} href={`#${next}`}>
                   ⇒
-            </a>
+                </a>
               )}
             </div>
           </h3>
@@ -276,24 +250,26 @@ const ExampleBloc = ({
               top: 50,
               bottom: 0,
               left: 0,
-              right: 0
+              right: 0,
             }}
           >
-            <Col percentage={40} margin={30}>
+            <Col percentage={50} margin={30}>
               <Code code={code} />
             </Col>
 
-            <Col percentage={40} margin={30}>
-              <ComponentAndText preface={preface} explanation={explanation}>
-                <Component />
-              </ComponentAndText>
-            </Col>
+            <Col percentage={50} margin={30}>
+              <div style={{ display: "flex", flexDirection: "column", height: "100%" }}>
+                <ComponentAndText preface={preface} explanation={explanation}>
+                  <Component />
+                </ComponentAndText>
 
-            <Col percentage={20} margin={30}>
-              <Logs clear={() => {
-                logStorage.current = [];
-                logObservers.current.forEach(observer => observer());
-              }} />
+                <Logs
+                  clear={() => {
+                    logStorage.current = [];
+                    logObservers.current.forEach((observer) => observer());
+                  }}
+                />
+              </div>
             </Col>
           </div>
         </section>

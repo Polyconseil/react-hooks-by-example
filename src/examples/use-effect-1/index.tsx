@@ -8,10 +8,6 @@ import ExampleUseEffect103Code from "!raw-loader!./ExampleUseEffect103";
 import ExampleUseEffect104Code from "!raw-loader!./ExampleUseEffect104";
 /* eslint import/no-webpack-loader-syntax: off */
 import ExampleUseEffect105Code from "!raw-loader!./ExampleUseEffect105";
-/* eslint import/no-webpack-loader-syntax: off */
-import ExampleUseEffect106Code from "!raw-loader!./ExampleUseEffect106";
-/* eslint import/no-webpack-loader-syntax: off */
-import ExampleUseEffect107Code from "!raw-loader!./ExampleUseEffect107";
 import React from "react";
 import { IExample } from "../../commons/types";
 import ExampleUseEffect101 from "./ExampleUseEffect101";
@@ -19,8 +15,6 @@ import ExampleUseEffect102 from "./ExampleUseEffect102";
 import ExampleUseEffect103 from "./ExampleUseEffect103";
 import ExampleUseEffect104 from "./ExampleUseEffect104";
 import ExampleUseEffect105 from "./ExampleUseEffect105";
-import ExampleUseEffect106 from "./ExampleUseEffect106";
-import ExampleUseEffect107 from "./ExampleUseEffect107";
 
 const examples: IExample[] = [
   {
@@ -37,27 +31,12 @@ const examples: IExample[] = [
         Can you guess the state the clean-up function will see when called ?
       </>
     ),
-    explanation: <>The clean-up function only knows the state of when it was created.</>
+    explanation: <>The clean-up function only knows the state of when it was created.</>,
   },
   {
     title: "useEffect 102",
     Component: ExampleUseEffect102,
     code: ExampleUseEffect102Code,
-    preface: (
-      <>
-        With useEffect you can listen to props' changes and update the state accordingly.
-        <br />
-        But do you see any issue that you might face ?
-      </>
-    ),
-    explanation: (
-      <>If value stored in state change every render you might be stuck in a render-cycle.</>
-    )
-  },
-  {
-    title: "useEffect 103",
-    Component: ExampleUseEffect103,
-    code: ExampleUseEffect103Code,
     preface: (
       <>
         An exemple of render-cycle.
@@ -70,12 +49,12 @@ const examples: IExample[] = [
         You can compare value in useEffect before calling setState but you should be carefull of
         side effect inside useEffect (as you should be about side effect in reder functions).
       </>
-    )
+    ),
   },
   {
-    title: "useEffect 104",
-    Component: ExampleUseEffect104,
-    code: ExampleUseEffect104Code,
+    title: "useEffect 103",
+    Component: ExampleUseEffect103,
+    code: ExampleUseEffect103Code,
     preface: (
       <>
         Most of time, we only want useEffect() to be called when the component is mounted for the
@@ -102,12 +81,12 @@ const examples: IExample[] = [
         </ul>
         Can you find a way to fix this bug ?
       </>
-    )
+    ),
   },
   {
-    title: "useEffect 105",
-    Component: ExampleUseEffect105,
-    code: ExampleUseEffect105Code,
+    title: "useEffect 104",
+    Component: ExampleUseEffect104,
+    code: ExampleUseEffect104Code,
     preface: (
       <>
         The simplest way to fix the bug would be to use a library that makes it possible to cancel a
@@ -120,33 +99,12 @@ const examples: IExample[] = [
         Great! Obviously, we don't want to repeat the same code everytime we want to fetch data.
         Let's make it a custom hook that we can reuse
       </>
-    )
-  },
-  {
-    title: "useEffect 106",
-    Component: ExampleUseEffect106,
-    code: ExampleUseEffect106Code,
-    preface: (
-      <>
-        We built a custom hook usePromise (all hooks must start with use*) that takes a function
-        that returns a promise as an argument.
-        <br />
-        Our hook handles the book-keeping to make sure that the value we return is consistent with
-        the argument and that the component is still mounted. It could be further improved by
-        handling correctly promise rejections
-      </>
     ),
-    explanation: (
-      <>
-        We are using here a new React Hook: <strong>useCallback</strong>. We will see in a next
-        section what is its purpose.
-      </>
-    )
   },
   {
-    title: "useEffect 107",
-    Component: ExampleUseEffect107,
-    code: ExampleUseEffect107Code,
+    title: "useEffect 105",
+    Component: ExampleUseEffect105,
+    code: ExampleUseEffect105Code,
     preface: <>How does a useEffect handle objects in dependencies ?</>,
     explanation: (
       <>
@@ -154,8 +112,8 @@ const examples: IExample[] = [
         <br />
         Keep es-lint updated and be ready to tricks it many times.
       </>
-    )
-  }
+    ),
+  },
 ];
 
 export default examples;

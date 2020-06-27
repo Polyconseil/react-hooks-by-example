@@ -12,14 +12,6 @@ const ExampleUseState103 = () => {
       <ul>
         <li>
           <ActionButton
-            label="Increment"
-            onClick={() => {
-              setState(state + 1);
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
             label="Increment multiple dummy"
             onClick={() => {
               const toIncrem = parseInt(prompt("increm ?") || "") || 0;
@@ -33,8 +25,8 @@ const ExampleUseState103 = () => {
             label="Increment multiple "
             onClick={() => {
               const toIncrem = parseInt(prompt("increm ?") || "") || 0;
-              log("will dumy increment", toIncrem);
-              for (let i = 0; i < toIncrem; i++) setState(state => state + 1);
+              log("will increment", toIncrem);
+              for (let i = 0; i < toIncrem; i++) setState((state) => state + 1);
             }}
           />
         </li>
@@ -43,6 +35,7 @@ const ExampleUseState103 = () => {
             label="Reset to 0"
             onClick={() => {
               setState(0);
+              log("reset");
             }}
           />
         </li>

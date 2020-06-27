@@ -1,69 +1,34 @@
 import React from "react";
 import ActionButton from "../../commons/ActionButton";
+import cloneDeep from "lodash.clonedeep";
+import { useLog } from "../../commons/ExampleBloc";
 
 const SubComponent = ({
-  value,
-  setValue,
-  otherValue,
-  setOtherValue
+  parentValue,
+  setParentValue,
 }: {
-  value: number;
-  setValue: (newValue: number) => void;
-  otherValue: { str: string };
-  setOtherValue: (newValue: { str: string }) => void;
+  parentValue: { str: string };
+  setParentValue: (newValue: { str: string }) => void;
 }) => {
-  const [state, setState] = React.useState<number>(value);
-  const [otherState, setOtherState] = React.useState<any>(otherValue);
+  const log = useLog();
+  const [shouldSetSuperState, setShouldSetSuperState] = React.useState<boolean>(false);
+
+  log("render");
 
   React.useEffect(() => {
-    setState(value);
-  }, [value, setState]);
-  React.useEffect(() => {
-    setOtherState(otherValue);
-  }, [otherValue, setOtherState]);
+    log("use effect");
+    if (shouldSetSuperState) setParentValue(parentValue);
+  }, [parentValue, setParentValue, shouldSetSuperState, log]);
 
   return (
     <>
-      <pre>{JSON.stringify({ value, state, otherState }, null, 2)}</pre>
+      <pre>{JSON.stringify({ parentValue, shouldSetSuperState }, null, 2)}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Increment state"
+            label="Change state option"
             onClick={() => {
-              setState(state => state + 1);
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Increment super state"
-            onClick={() => {
-              setValue(value + 1);
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Change other state"
-            onClick={() => {
-              setOtherState({ someProps: "zefzefz" });
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Change super other state"
-            onClick={() => {
-              setOtherValue({ str: "zezfez" });
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Reset super state"
-            onClick={() => {
-              setValue(0);
-              setOtherValue({ str: "" });
+              setShouldSetSuperState((state) => !state);
             }}
           />
         </li>
@@ -72,13 +37,10 @@ const SubComponent = ({
   );
 };
 
-const ExampleUseState106 = () => {
-  const [counter, setCounter] = React.useState<number>(0);
+const ExampleUseEffect102 = () => {
   const [str, setStr] = React.useState<{ str: string }>({ str: "" });
 
-  return (
-    <SubComponent value={counter} setValue={setCounter} otherValue={str} setOtherValue={setStr} />
-  );
+  return <SubComponent parentValue={cloneDeep(str)} setParentValue={setStr} />;
 };
 
-export default ExampleUseState106;
+export default ExampleUseEffect102;

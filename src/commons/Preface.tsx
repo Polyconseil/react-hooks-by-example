@@ -4,8 +4,8 @@ const Preface = ({ children }: { children: React.ReactNode }) => {
   return (
     <div
       style={{
-        padding: 10,
-        color: "#EEEEEE"
+        padding: "10px 0px",
+        color: "#EEEEEE",
       }}
     >
       {children}

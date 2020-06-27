@@ -1,56 +1,76 @@
 import React from "react";
 import ActionButton from "../../commons/ActionButton";
-import cloneDeep from "lodash.clonedeep";
 import { useLog } from "../../commons/ExampleBloc";
 
-const SubComponent = ({
-  parentValue,
-  setParentValue,
-}: {
-  parentValue: { str: string };
-  setParentValue: (newValue: { str: string }) => void;
-}) => {
-  const log = useLog();
-  const [state, setState] = React.useState<any>(parentValue);
-  const [shouldSetSuperState, setShouldSetSuperState] = React.useState<boolean>(false);
+const fakeFetch = (id: number): Promise<{ json: () => Promise<{ name: string }> }> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        json: async () => {
+          return { name: `Order #${id}` };
+        },
+      });
+      // We simulate the server response time by using
+      // the order id as a milliseconds wait time
+    }, id);
+  });
+};
 
-  log("render");
+const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
+  const log = useLog();
+
+  const [orderName, setOrderName] = React.useState<string | null>(null);
+  log("virtual-render > DisplayMyOrder", { order: orderName });
 
   React.useEffect(() => {
-    log("use effect");
-    if (shouldSetSuperState) setParentValue(state);
-    setState(parentValue);
-  }, [parentValue, setParentValue, state, setState, shouldSetSuperState, log]);
+    log("useEffect called !", { orderId, orderName });
+
+    fakeFetch(orderId)
+      .then((req) => req.json())
+      .then((order) => setOrderName(order.name));
+
+    return () => {};
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [orderId]);
+
+  return <div>My order: {orderName}</div>;
+};
+
+const ExampleUseEffect103 = () => {
+  const log = useLog();
+
+  const [orderId, setOrderId] = React.useState<number | null>(null);
+  log("virtual-render > Example", { orderId });
 
   return (
     <>
-      <pre>{JSON.stringify({ state, shouldSetSuperState }, null, 2)}</pre>
+      <pre>Requested order: {orderId}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Change other state"
+            label="Display orderId"
             onClick={() => {
-              setState({ someProps: "zefzefz" });
+              const id = Number.parseFloat(prompt("Order ID?") || "");
+              setOrderId(id);
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Change state option"
+            label="Display 2 orders quickly"
             onClick={() => {
-              setShouldSetSuperState((state) => !state);
+              setOrderId(2000);
+              setTimeout(() => setOrderId(1000), 1);
             }}
           />
+          <br />
+          (Call order 2000 (2 seconds to get a response) and without waiting call order 1000 (1 sec
+          to get a response))
         </li>
       </ul>
+      {orderId && <DisplayMyOrder orderId={orderId} />}
     </>
   );
 };
 
-const ExampleUseState106 = () => {
-  const [str, setStr] = React.useState<{ str: string }>({ str: "" });
-
-  return <SubComponent parentValue={cloneDeep(str)} setParentValue={setStr} />;
-};
-
-export default ExampleUseState106;
+export default ExampleUseEffect103;

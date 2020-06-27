@@ -1,5 +1,4 @@
 import React from "react";
-import { useLog } from "./ExampleBloc";
 
 export interface IProps {
   label: string;
@@ -7,18 +6,7 @@ export interface IProps {
 }
 
 const ActionButton = ({ label, onClick }: IProps) => {
-  const log = useLog();
-
-  return (
-    <button
-      onClick={e => {
-        log(`ActionButton > "${label}"`);
-        onClick(e);
-      }}
-    >
-      {label}
-    </button>
-  );
+  return <button onClick={onClick}>{label}</button>;
 };
 
 export default ActionButton;

@@ -3,12 +3,12 @@ import ActionButton from "../../commons/ActionButton";
 import { useLog } from "../../commons/ExampleBloc";
 
 const fakeFetch = (id: number): Promise<{ json: () => Promise<{ name: string }> }> => {
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         json: async () => {
           return { name: `Order #${id}` };
-        }
+        },
       });
       // We simulate the server response time by using
       // the order id as a milliseconds wait time
@@ -20,14 +20,32 @@ const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
   const log = useLog();
 
   const [orderName, setOrderName] = React.useState<string | null>(null);
-  log("virtual-render > DisplayMyOrder", { order: orderName });
+  log("virtual-render > DisplayMyOrder", { order: orderName, orderId: orderId });
 
   React.useEffect(() => {
     log("useEffect called !", { orderId, orderName });
 
+    let canceled = false;
+
     fakeFetch(orderId)
-      .then(req => req.json())
-      .then(order => setOrderName(order.name));
+      .then((req) => req.json())
+      // When the request is completed, we check before setting the state
+      // that the request was not canceled
+      .then((order) => {
+        if (canceled) {
+          log(`Request for order ${orderId} was canceled, we don't set the state`);
+        } else {
+          setOrderName(order.name);
+        }
+      });
+
+    // The clean-up function will flag the request as canceled
+    return () => {
+      log("useEffect cleanup called");
+
+      canceled = true;
+    };
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
 
