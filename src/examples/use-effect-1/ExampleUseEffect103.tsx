@@ -2,15 +2,13 @@ import React from "react";
 import ActionButton from "../../commons/ActionButton";
 import { useLog } from "../../commons/ExampleBloc";
 
-const fakeFetch = (
-  id: number
-): Promise<{ json: () => Promise<{ name: string }> }> => {
-  return new Promise(resolve => {
+const fakeFetch = (id: number): Promise<{ json: () => Promise<{ name: string }> }> => {
+  return new Promise((resolve) => {
     setTimeout(() => {
       resolve({
         json: async () => {
           return { name: `Order #${id}` };
-        }
+        },
       });
       // We simulate the server response time by using
       // the order id as a milliseconds wait time
@@ -27,27 +25,11 @@ const DisplayMyOrder = ({ orderId }: { orderId: number }) => {
   React.useEffect(() => {
     log("useEffect called !", { orderId, orderName });
 
-    let canceled = false;
-
     fakeFetch(orderId)
-      .then(req => req.json())
-      // When the request is completed, we check before setting the state
-      // that the request was not canceled
-      .then(order => {
-        if (canceled) {
-          log(
-            `Request for order ${orderId} was canceled, we don't set the state`
-          );
-        } else {
-          setOrderName(order.name);
-        }
-      });
+      .then((req) => req.json())
+      .then((order) => setOrderName(order.name));
 
-    // The clean-up function will flag the request as canceled
-    return () => {
-      canceled = true;
-    };
-
+    return () => {};
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [orderId]);
 
@@ -82,8 +64,8 @@ const ExampleUseEffect103 = () => {
             }}
           />
           <br />
-          (Call order 2000 (2 seconds to get a response) and without waiting
-          call order 1000 (1 sec to get a response))
+          (Call order 2000 (2 seconds to get a response) and without waiting call order 1000 (1 sec
+          to get a response))
         </li>
       </ul>
       {orderId && <DisplayMyOrder orderId={orderId} />}

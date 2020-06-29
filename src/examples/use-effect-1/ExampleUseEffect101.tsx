@@ -6,7 +6,6 @@ const ExampleUseEffect101 = () => {
   const log = useLog();
 
   const [state, setState] = React.useState<number>(0);
-  log("virtual-render", { state });
 
   React.useEffect(() => {
     log("useEffect called !", { state });
@@ -20,14 +19,6 @@ const ExampleUseEffect101 = () => {
     <>
       <pre>{JSON.stringify(state, null, 2)}</pre>
       <ul>
-        <li>
-          <ActionButton
-            label="Do nothing state-wise"
-            onClick={() => {
-              /* NOOP */
-            }}
-          />
-        </li>
         <li>
           <ActionButton
             label="Increment"

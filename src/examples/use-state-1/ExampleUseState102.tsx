@@ -3,65 +3,40 @@ import ActionButton from "../../commons/ActionButton";
 import { useLog } from "../../commons/ExampleBloc";
 
 const ExampleUseState102 = () => {
+  const initial = {
+    value: { data: 0 },
+  };
   const log = useLog();
-
-  const [numberState, setNumberState] = React.useState<number>(0);
-  const [stringState, setStringState] = React.useState<string>("");
-  const [objectState, setObjectState] = React.useState<{ insideVal: string }>({
-    insideVal: ""
-  });
-  log("virtual-render", { numberState, stringState, objectState });
+  const [state, setState] = React.useState<{ value: { data: number } }>(initial);
 
   return (
     <>
-      <pre>
-        {JSON.stringify({ numberState, stringState, objectState }, null, 2)}
-      </pre>
-
+      <pre>{JSON.stringify(state, null, 2)}</pre>
       <ul>
         <li>
           <ActionButton
-            label="Update numberState"
+            label="Increment"
             onClick={() => {
-              const s = Number.parseFloat(prompt("Value?") || "");
-              setNumberState(s);
+              setState({ value: { data: state.value.data + 1 } });
+              log("increment");
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Update stringState"
+            label="Copy and re-apply"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              setStringState(s);
+              setState({ value: { data: state.value.data } });
+              log("copy and re-apply");
             }}
           />
         </li>
         <li>
           <ActionButton
-            label="Update objectState"
+            label="Re-apply state"
             onClick={() => {
-              const s = prompt("Value?") || "";
-              setObjectState({ insideVal: s });
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Do something stupid v1"
-            onClick={() => {
-              const s = prompt("Value?") || "";
-              objectState.insideVal = s;
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
-            label="Do something stupid v2"
-            onClick={() => {
-              const s = prompt("Value?") || "";
-              objectState.insideVal = s;
-              setObjectState(objectState);
+              setState(state);
+              log("re-apply state");
             }}
           />
         </li>

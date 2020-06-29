@@ -14,10 +14,10 @@ const ExampleUseRef101 = () => {
       <ul>
         <li>
           <ActionButton
-            label="Do nothing ref-wise"
+            label="Log ref value"
             onClick={() => {
               /* NOOP */
-              log("Ref: ", { ref });
+              console.log("Ref: ", ref.current);
             }}
           />
         </li>

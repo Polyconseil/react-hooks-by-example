@@ -4,9 +4,7 @@ import { useLog } from "../../commons/ExampleBloc";
 
 const ExampleUseState101 = () => {
   const log = useLog();
-
   const [state, setState] = React.useState<number>(0);
-  log("virtual-render", { state });
 
   return (
     <>
@@ -14,17 +12,10 @@ const ExampleUseState101 = () => {
       <ul>
         <li>
           <ActionButton
-            label="Do nothing state-wise"
-            onClick={() => {
-              /* NOOP */
-            }}
-          />
-        </li>
-        <li>
-          <ActionButton
             label="Increment"
             onClick={() => {
               setState(state + 1);
+              log("after increment", state);
             }}
           />
         </li>
@@ -33,6 +24,7 @@ const ExampleUseState101 = () => {
             label="Reset to 0"
             onClick={() => {
               setState(0);
+              log("reset", state);
             }}
           />
         </li>
